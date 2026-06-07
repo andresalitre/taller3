@@ -35,6 +35,7 @@ public class Administrador {
 	        break;
 	    case "2":
 	        modificarMago();
+	        
 	        break;
 	    case "3":
 	        eliminarMago();
@@ -68,11 +69,22 @@ public class Administrador {
 	}
 	
 	private void modificarMago() {
-		
+		mostrarMagos();
 	}
 	
-	private void eliminarMago() {
-		
+	private void eliminarMago() throws IOException {
+		System.out.println("¿Que mago quieres eliminar? (Usa '0' para volver)");
+		System.out.println("0) Volver");
+		mostrarMagos();
+		int opcion = seleccionar(magos.size());
+		if (opcion == 0) {
+			System.out.println("Regresando...");
+			return;
+		}
+		opcion = opcion - 1;
+		System.out.println("¡El mago " + magos.get(opcion).getNombre() + " ha sido eliminado!");
+		magos.remove(opcion);
+		escritor.escribirMago(magos);
 	}
 	
 	private void agregarHechizo() {
@@ -80,11 +92,57 @@ public class Administrador {
 	}
 	
 	private void modificarHechizo() {
+		mostrarHechizos();
+	}
+	
+	private void eliminarHechizo() throws IOException {
+		System.out.println("¿Que hechizo quieres eliminar? (Usa '0' para volver)");
+		System.out.println("0) Volver");
+		mostrarHechizos();
+		int opcion = seleccionar(hechizos.size());
+		if (opcion == 0) {
+			System.out.println("Regresando...");
+			return;
+		}
+		opcion = opcion - 1;
+		System.out.println("¡El hechizo " + hechizos.get(opcion).getNombre() + " ha sido eliminado!");
+		hechizos.remove(opcion);
+		escritor.escribirHechizo(hechizos);
 		
 	}
 	
-	private void eliminarHechizo() {
+	private void mostrarMagos() {
+		int i = 1;
+		for (Mago m : magos) {
+			System.out.println(i + ") " + m.getNombre());
+			i++;
+		}
+	}
+	
+	private void mostrarHechizos() {
+		int i = 1;
+		for (Hechizo h : hechizos) {
+			System.out.println(i + ") " + h.getNombre());
+			i++;
+		}
 		
+	}
+	
+	public int seleccionar(int max) {
+	    int opcion = -1;
+	    while (opcion < 0 || opcion > max) {
+	        if (sc.hasNextInt()) {
+	            opcion = sc.nextInt();
+	            sc.nextLine();
+	            if (opcion < 0 || opcion > max) {
+	                System.out.println("Número fuera de rango, intente nuevamente.");
+	            }
+	        } else {
+	            System.out.println("Debe ingresar un número, intente nuevamente.");
+	            sc.nextLine();
+	        }
+	    }
+	    return opcion;
 	}
 
 }

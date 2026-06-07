@@ -47,13 +47,4 @@ public class Sistema {
     	} while (true);
     	
     }
-
-    private void Testing() {
-        for (Mago m : magos) {
-            System.out.println(m.getNombre());
-            for (Hechizo h : m.getHechizos()) {
-                System.out.println(h.getNombre() + " " + h.getTipo() + " " + h.getDaño());
-            }
-        }
-    }
 }
