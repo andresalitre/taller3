@@ -12,7 +12,7 @@ public class Mago {
 		this.hechizos = new ArrayList<>();
 	}
 	
-	public void añadirHechizos(Hechizo h) {
+	public void añadirHechizo(Hechizo h) {
 		hechizos.add(h);
 	}
 	
@@ -24,5 +24,24 @@ public class Mago {
 		return hechizos;
 	}
 	
+	public void cambiarNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
+	public void eliminarHechizo(int opcion) {
+		hechizos.remove(opcion);
+	}
+	
+	public void mostrarHechizos() {
+		int i = 1;
+		for (Hechizo h : hechizos) {
+			System.out.println(i + ") " + h.getNombre());
+			i++;
+		}
+	}
+	
+	public String hechizoAñadido(String añadido) {
+		return añadido;
+	}
 	
 }

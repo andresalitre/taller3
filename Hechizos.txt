@@ -48,7 +48,7 @@ Magnitud;Tierra;144;16
 Fuerza Equina;Tierra;136;33
 Tormenta de Arena;Tierra;103;20
 Puño Fuego;Fuego;87;3
-Surf;Agua;31;76,267
+Surf;Agua;31;70,267
 Huesomerang;Tierra;14;14
 Acua Aro;Agua;105;15,474
 Romperrocas;Tierra;131;11

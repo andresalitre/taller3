@@ -70,7 +70,7 @@ public class Administrador {
 	    do { //agregar minimo 1 hechizo al crear el mago
 	        opcion = seleccionar(0,hechizos.size());
 	        if (opcion != 0) {
-	            m.añadirHechizos(hechizos.get(opcion - 1));
+	            m.añadirHechizo(hechizos.get(opcion - 1));
 	            System.out.println(hechizos.get(opcion - 1).getNombre() + " añadido! (Agrega otro o usa '0' para volver)");
 	        } else if (m.getHechizos().isEmpty()) {
 	            System.out.println("Debes agregar al menos un hechizo.");
@@ -82,8 +82,43 @@ public class Administrador {
 	    System.out.println("Mago añadido correctamente!");
 	}
 	
-	private void modificarMago() {
-		mostrarMagos();
+	private void modificarMago() throws IOException {
+	    System.out.println("¿Que mago deseas modificar? (Usa '0' para volver)");
+	    mostrarMagos();
+	    int opcion = seleccionar(0, magos.size());
+	    if (opcion == 0) return;
+	    Mago m = magos.get(opcion - 1);
+
+	    System.out.println("Mago seleccionado: " + m.getNombre() + "\n0) Volver\n1) Cambiar nombre\n2) Agregar hechizo\n3) Quitar hechizo");
+	    opcion = seleccionar(0, 3);
+
+	    switch (opcion) {
+	        case 0:
+	            return;
+	        case 1:
+	            System.out.print("Ingrese nuevo nombre: ");
+	            String nombre = sc.nextLine();
+	            m.cambiarNombre(nombre);
+	            break;
+	        case 2:
+	            mostrarHechizos();
+	            int agregar = seleccionar(0, hechizos.size());
+	            if (agregar != 0) {
+	                m.añadirHechizo(hechizos.get(agregar - 1));
+	                System.out.println("¡Hechizo añadido!");
+	            }
+	            break;
+	        case 3:
+	            m.mostrarHechizos();
+	            int quitar = seleccionar(0, m.getHechizos().size());
+	            if (quitar != 0) {
+	                m.eliminarHechizo(quitar - 1);
+	                System.out.println("Hechizo eliminado!");
+	            }
+	            break;
+	    }
+	    System.out.println("Cambio exitoso!");
+	    escritor.escribirMago(magos);
 	}
 	
 	private void eliminarMago() throws IOException { //borra el mago con .remove de la lista, luego modifica el archivo
@@ -137,17 +172,42 @@ public class Administrador {
 	            h = new Tierra(nombre, "Tierra", daño, defensa);
 	            break;
 	        default:
-	            return;
+	            return; //esto por si acaso pero no deberia pasar pq segun el rango que el usuario elige de 1 a 4 se selecciona el tipo
 	    }
 
 	    hechizos.add(h);
 	    escritor.escribirHechizo(hechizos);
-	    System.out.println("Hechizo añadido correctamente!");
+	    System.out.println("¡Hechizo añadido correctamente!");
 	}
 		
 	
-	private void modificarHechizo() {
+	private void modificarHechizo() throws IOException { // modificar hechizos
+		System.out.println("¿Que hechizo deseas modificar? (Usa '0' para volver)");
 		mostrarHechizos();
+		int opcion = seleccionar(0, hechizos.size());
+		if (opcion == 0) return;
+		Hechizo h = hechizos.get(opcion - 1);
+		System.out.println("Hechizo a modificar: " + h.getNombre() + " | (Usa '0' para volver)\n¿Que deseas modificar?\n0) Volver\n1) Nombre\n2) Daño"); // printa lo basico
+		opcion = seleccionar(0,h.modificarse()); // elegir el hechizo a modificar, el metodo "modificarse" printea las otras opciones segun el tipo del hechizo
+		
+		switch (opcion) { //si es 1 cambia nombre, si es 2 cambia daño, si es otro, cada clase de hechizo tiene su metodo para cambiar
+			case 1:
+				System.out.print("Ingrese nuevo nombre: ");
+				String nombre = sc.nextLine();
+				h.cambiarNombre(nombre);
+				break;
+			case 2:
+				System.out.print("Ingrese nuevo daño: ");
+				int daño = seleccionarSinMaximo();
+				h.cambiarDaño(daño);
+				break;
+			default:
+				System.out.print("Ingrese nuevo valor: ");
+				int valor = seleccionarSinMaximo();
+				h.modificar(opcion, valor);
+		}
+		System.out.println("Cambio exitoso!");
+		escritor.escribirHechizo(hechizos); //guardar
 	}
 	
 	private void eliminarHechizo() throws IOException { //eliminar el hechizo con .remove de la lista, luego modifica el archivo

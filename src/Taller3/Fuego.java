@@ -1,5 +1,7 @@
 package Taller3;
 
+import java.util.Scanner;
+
 public class Fuego extends Hechizo {
     private int quemadura;
 
@@ -11,4 +13,16 @@ public class Fuego extends Hechizo {
     public String escribirse() {
         return getNombre() + ";Fuego;" + getDaño() + ";" + quemadura;
     }
+  
+    
+    public int modificarse() {
+    	System.out.println("3) Quemadura");
+    	return 3;
+    }
+    
+	public void modificar(int opcion, int valor) {
+		this.quemadura = valor;
+	}
+    
+    
 }

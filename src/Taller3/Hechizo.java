@@ -27,5 +27,20 @@ public class Hechizo {
 		return null;
 	}
 	
+	public int modificarse() {
+		return 0;
+	}
+	
+	public void cambiarDaño(int daño) {
+		this.daño = daño;
+	}
+	
+	public void cambiarNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
+	public void modificar(int opcion, int valor) {
+		
+	}
 	
 }

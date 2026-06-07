@@ -11,4 +11,14 @@ public class Tierra extends Hechizo {
     public String escribirse() {
         return getNombre() + ";Tierra;" + getDaño() + ";" + defensa;
     }
+    
+    public int modificarse() {
+    	System.out.println("3) Defensa");
+    	return 3;
+    }
+    
+    public void modificar(int opcion, int valor) {
+		this.defensa = valor;
+	}
+    
 }

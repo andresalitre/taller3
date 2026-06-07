@@ -63,7 +63,7 @@ public class LectorArchivos {
 	            for (String hm : hechizosMago) {
 	                for (Hechizo h : hechizos) {
 	                    if (hm.equals(h.getNombre())) {
-	                        m.añadirHechizos(h);
+	                        m.añadirHechizo(h);
 	                    }
 	                }
 	            }
