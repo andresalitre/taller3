@@ -7,4 +7,8 @@ public class Fuego extends Hechizo {
         super(nombre, tipo, daño);
         this.quemadura = quemadura;
     }
+    
+    public String escribirse() {
+        return getNombre() + ";Fuego;" + getDaño() + ";" + quemadura;
+    }
 }

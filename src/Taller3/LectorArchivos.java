@@ -57,16 +57,17 @@ public class LectorArchivos {
             String nombre = partes[0];
             Mago m = new Mago(nombre);
 
-            String[] hechizosMago = partes[1].split("\\|");
-
-            for (String hm : hechizosMago) {
-                for (Hechizo h : hechizos) {
-                    if (hm.equals(h.getNombre())) {
-                        m.añadirHechizos(h);
-                    }
-                }
+            if (partes.length > 1 && !partes[1].isEmpty()) {
+	            String[] hechizosMago = partes[1].split("\\|");
+	            
+	            for (String hm : hechizosMago) {
+	                for (Hechizo h : hechizos) {
+	                    if (hm.equals(h.getNombre())) {
+	                        m.añadirHechizos(h);
+	                    }
+	                }
+	            }
             }
-
             magos.add(m);
         }
 

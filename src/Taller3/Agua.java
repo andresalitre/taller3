@@ -9,4 +9,8 @@ public class Agua extends Hechizo {
         this.heal = heal;
         this.presion = presion;
     }
+    
+    public String escribirse() {
+        return getNombre() + ";Agua;" + getDaño() + ";" + heal + "," + presion;
+    }
 }

@@ -22,6 +22,10 @@ public class Hechizo {
 	public int getDaño() {
 		return daño;
 	}
+
+	public String escribirse() {
+		return null;
+	}
 	
 	
 }

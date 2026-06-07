@@ -9,4 +9,8 @@ public class Planta extends Hechizo {
         this.stun = stun;
         this.plantas = plantas;
     }
+    
+    public String escribirse() {
+        return getNombre() + ";Planta;" + getDaño() + ";" + stun + "," + plantas;
+    }
 }

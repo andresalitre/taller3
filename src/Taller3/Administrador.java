@@ -1,19 +1,23 @@
 package Taller3;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
 public class Administrador {
 	private List<Mago> magos;
 	private List<Hechizo> hechizos;
-	
+	private Scanner sc;
+	private EscritorArchivos escritor;
+	 
 	public Administrador(List<Mago> magos, List<Hechizo> hechizos) {
         this.magos = magos;
         this.hechizos = hechizos;
+        this.sc = new Scanner(System.in);
+        this.escritor = new EscritorArchivos();
     }
 	
-	public void menu() {
-		Scanner sc = new Scanner(System.in);
+	public void menu() throws IOException {
     	String opcion;
     	do {
 		System.out.println("1. Agregar Mago\r\n"
@@ -55,8 +59,12 @@ public class Administrador {
     	} while (!opcion.equals("7"));
 	}
 	
-	private void agregarMago() {
-		
+	private void agregarMago() throws IOException { // solo agrega mago
+		System.out.println("Ingresa el nombre del mago: ");
+		String nombre = sc.nextLine();
+		magos.add(new Mago(nombre));
+		System.out.println("Mago añadido correctamente!");
+		escritor.escribirMago(magos);
 	}
 	
 	private void modificarMago() {

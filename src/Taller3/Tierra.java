@@ -7,4 +7,8 @@ public class Tierra extends Hechizo {
         super(nombre, tipo, daño);
         this.defensa = defensa;
     }
+    
+    public String escribirse() {
+        return getNombre() + ";Tierra;" + getDaño() + ";" + defensa;
+    }
 }

@@ -3,6 +3,7 @@ package Taller3;
 import java.util.List;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Sistema {
     private List<Mago> magos;
@@ -17,11 +18,11 @@ public class Sistema {
         this.analista = new Analista(magos, hechizos);
     }
 
-    public void iniciar() {
+    public void iniciar() throws IOException {
         menu();
     }
     
-    public void menu() {
+    public void menu() throws IOException {
     	Scanner sc = new Scanner(System.in);
     	String opcion;
     	do {
