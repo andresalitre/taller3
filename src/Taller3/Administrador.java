@@ -17,7 +17,7 @@ public class Administrador {
         this.escritor = new EscritorArchivos();
     }
 	
-	public void menu() throws IOException {
+	public void menu() throws IOException { //menu de admin
     	String opcion;
     	do {
 		System.out.println("1. Agregar Mago\r\n"
@@ -60,23 +60,37 @@ public class Administrador {
     	} while (!opcion.equals("7"));
 	}
 	
-	private void agregarMago() throws IOException { // solo agrega mago
-		System.out.println("Ingresa el nombre del mago: ");
-		String nombre = sc.nextLine();
-		magos.add(new Mago(nombre));
-		System.out.println("Mago añadido correctamente!");
-		escritor.escribirMago(magos);
+	private void agregarMago() throws IOException { //crear mago, pide nombre y muestra los hechizos para agregarle uwwu
+	    System.out.println("Ingresa el nombre del mago: ");
+	    String nombre = sc.nextLine();
+	    Mago m = new Mago(nombre);
+	    System.out.println("Agrega al menos un hechizo (0 para terminar, mínimo 1):");
+	    mostrarHechizos();
+	    int opcion;
+	    do { //agregar minimo 1 hechizo al crear el mago
+	        opcion = seleccionar(0,hechizos.size());
+	        if (opcion != 0) {
+	            m.añadirHechizos(hechizos.get(opcion - 1));
+	            System.out.println(hechizos.get(opcion - 1).getNombre() + " añadido! (Agrega otro o usa '0' para volver)");
+	        } else if (m.getHechizos().isEmpty()) {
+	            System.out.println("Debes agregar al menos un hechizo.");
+	        }
+	    } while (opcion != 0 || m.getHechizos().isEmpty());
+
+	    magos.add(m);
+	    escritor.escribirMago(magos);
+	    System.out.println("Mago añadido correctamente!");
 	}
 	
 	private void modificarMago() {
 		mostrarMagos();
 	}
 	
-	private void eliminarMago() throws IOException {
+	private void eliminarMago() throws IOException { //borra el mago con .remove de la lista, luego modifica el archivo
 		System.out.println("¿Que mago quieres eliminar? (Usa '0' para volver)");
 		System.out.println("0) Volver");
 		mostrarMagos();
-		int opcion = seleccionar(magos.size());
+		int opcion = seleccionar(0,magos.size());
 		if (opcion == 0) {
 			System.out.println("Regresando...");
 			return;
@@ -87,19 +101,60 @@ public class Administrador {
 		escritor.escribirMago(magos);
 	}
 	
-	private void agregarHechizo() {
-		
+	private void agregarHechizo() throws IOException {
+	    System.out.println("¿De que tipo sera el nuevo hechizo?");
+	    System.out.println("1) Fuego\n2) Agua\n3) Planta\n4) Tierra");
+	    int tipo = seleccionar(1,4);
+	    System.out.println("Ingrese nombre del hechizo: ");
+	    String nombre = sc.nextLine();
+	    System.out.println("Ingrese daño del hechizo: ");
+	    int daño = seleccionarSinMaximo();
+	    Hechizo h;
+
+	    switch (tipo) {
+	        case 1:
+	            System.out.println("Ingrese duracion de quemadura: ");
+	            int quemadura = seleccionarSinMaximo();
+	            h = new Fuego(nombre, "Fuego", daño, quemadura);
+	            break;
+	        case 2:
+	            System.out.println("Ingrese cantidad de heal: ");
+	            int heal = seleccionarSinMaximo();
+	            System.out.println("Ingrese presion del agua: ");
+	            int presion = seleccionarSinMaximo();
+	            h = new Agua(nombre, "Agua", daño, heal, presion);
+	            break;
+	        case 3:
+	            System.out.println("Ingrese duracion del stun: ");
+	            int stun = seleccionarSinMaximo();
+	            System.out.println("Ingrese cantidad de plantas: ");
+	            int plantas = seleccionarSinMaximo();
+	            h = new Planta(nombre, "Planta", daño, stun, plantas);
+	            break;
+	        case 4:
+	            System.out.println("Ingrese mejora de defensa: ");
+	            int defensa = seleccionarSinMaximo();
+	            h = new Tierra(nombre, "Tierra", daño, defensa);
+	            break;
+	        default:
+	            return;
+	    }
+
+	    hechizos.add(h);
+	    escritor.escribirHechizo(hechizos);
+	    System.out.println("Hechizo añadido correctamente!");
 	}
+		
 	
 	private void modificarHechizo() {
 		mostrarHechizos();
 	}
 	
-	private void eliminarHechizo() throws IOException {
+	private void eliminarHechizo() throws IOException { //eliminar el hechizo con .remove de la lista, luego modifica el archivo
 		System.out.println("¿Que hechizo quieres eliminar? (Usa '0' para volver)");
 		System.out.println("0) Volver");
 		mostrarHechizos();
-		int opcion = seleccionar(hechizos.size());
+		int opcion = seleccionar(0,hechizos.size());
 		if (opcion == 0) {
 			System.out.println("Regresando...");
 			return;
@@ -111,7 +166,7 @@ public class Administrador {
 		
 	}
 	
-	private void mostrarMagos() {
+	private void mostrarMagos() { //muestra todos los maguitos
 		int i = 1;
 		for (Mago m : magos) {
 			System.out.println(i + ") " + m.getNombre());
@@ -119,7 +174,7 @@ public class Administrador {
 		}
 	}
 	
-	private void mostrarHechizos() {
+	private void mostrarHechizos() { //muestra todos los hechizos
 		int i = 1;
 		for (Hechizo h : hechizos) {
 			System.out.println(i + ") " + h.getNombre());
@@ -128,13 +183,30 @@ public class Administrador {
 		
 	}
 	
-	public int seleccionar(int max) {
+	public int seleccionar(int min, int max) { //seleccionar, el metodo para que el usuario elija un numero entre un min y un maximo, osea para retornar un numero entre un rango
 	    int opcion = -1;
-	    while (opcion < 0 || opcion > max) {
+	    while (opcion < min || opcion > max) {
 	        if (sc.hasNextInt()) {
 	            opcion = sc.nextInt();
 	            sc.nextLine();
-	            if (opcion < 0 || opcion > max) {
+	            if (opcion < min || opcion > max) {
+	                System.out.println("Número fuera de rango, intente nuevamente.");
+	            }
+	        } else {
+	            System.out.println("Debe ingresar un número, intente nuevamente.");
+	            sc.nextLine();
+	        }
+	    }
+	    return opcion;
+	}
+	
+	public int seleccionarSinMaximo() { //seleccionar un numero entre 0 e infinito 
+	    int opcion = -1;
+	    while (opcion < 0) {
+	        if (sc.hasNextInt()) {
+	            opcion = sc.nextInt();
+	            sc.nextLine();
+	            if (opcion < 0) {
 	                System.out.println("Número fuera de rango, intente nuevamente.");
 	            }
 	        } else {
