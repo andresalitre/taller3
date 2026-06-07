@@ -11,7 +11,7 @@ public class Sistema {
     private Administrador admin;
     private Analista analista;
 
-    public Sistema() throws FileNotFoundException {
+    public Sistema() throws FileNotFoundException { // el sistema crea la lista hechizos, magos y las instancia de menu de admin y analista
         this.hechizos = LectorArchivos.leerHechizos("Hechizos.txt");
         this.magos = LectorArchivos.leerMagos("Magos.txt", hechizos);
         this.admin = new Administrador(magos, hechizos);
@@ -22,7 +22,7 @@ public class Sistema {
         menu();
     }
     
-    public void menu() throws IOException {
+    public void menu() throws IOException { //menu principal para acceder al administrador o al analista
     	Scanner sc = new Scanner(System.in);
     	String opcion;
     	do {
@@ -40,11 +40,11 @@ public class Sistema {
     			System.out.println("Cerrando sistema...");
     			return;
     		default:
-    			System.out.println("Opcion invalida\n");
+    			System.out.println("Opcion invalida");
     			break;
     		}
     		
-    	} while (true);
+    	} while (true); //while true por que este menu solo se cierra al apretar 3
     	
     }
 }

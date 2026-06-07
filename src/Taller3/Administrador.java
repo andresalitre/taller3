@@ -10,14 +10,14 @@ public class Administrador {
 	private Scanner sc;
 	private EscritorArchivos escritor;
 	 
-	public Administrador(List<Mago> magos, List<Hechizo> hechizos) {
+	public Administrador(List<Mago> magos, List<Hechizo> hechizos) { //el administrador guarda instancia de lista de magos, hechizos, un scanner y el escritor de archivos
         this.magos = magos;
         this.hechizos = hechizos;
         this.sc = new Scanner(System.in);
         this.escritor = new EscritorArchivos();
     }
 	
-	public void menu() throws IOException { //menu de admin
+	public void menu() throws IOException { //menu de admin con switch para seleccionar lo que se va a hacer
     	String opcion;
     	do {
 		System.out.println("1. Agregar Mago\r\n"
@@ -57,7 +57,7 @@ public class Administrador {
 	        break;
 	}
 		
-    	} while (!opcion.equals("7"));
+    	} while (!opcion.equals("7")); // si apreta 7 se sale al menu inicial
 	}
 	
 	private void agregarMago() throws IOException { //crear mago, pide nombre y muestra los hechizos para agregarle uwwu
@@ -79,10 +79,10 @@ public class Administrador {
 
 	    magos.add(m);
 	    escritor.escribirMago(magos);
-	    System.out.println("Mago añadido correctamente!");
+	    System.out.println("Mago añadido correctamente!"); //se guarda
 	}
 	
-	private void modificarMago() throws IOException {
+	private void modificarMago() throws IOException {  //modificar el nombre del mago, o se le añaden hechizos yo se le borran
 	    System.out.println("¿Que mago deseas modificar? (Usa '0' para volver)");
 	    mostrarMagos();
 	    int opcion = seleccionar(0, magos.size());
@@ -90,17 +90,17 @@ public class Administrador {
 	    Mago m = magos.get(opcion - 1);
 
 	    System.out.println("Mago seleccionado: " + m.getNombre() + "\n0) Volver\n1) Cambiar nombre\n2) Agregar hechizo\n3) Quitar hechizo");
-	    opcion = seleccionar(0, 3);
+	    opcion = seleccionar(0, 3); // seleccionar opcion
 
 	    switch (opcion) {
-	        case 0:
+	        case 0: //volver al menu
 	            return;
-	        case 1:
+	        case 1: //cambiar nombre 
 	            System.out.print("Ingrese nuevo nombre: ");
 	            String nombre = sc.nextLine();
 	            m.cambiarNombre(nombre);
-	            break;
-	        case 2:
+	            break; 
+	        case 2: //muestra hechizos luego se pide cual agregar
 	            mostrarHechizos();
 	            int agregar = seleccionar(0, hechizos.size());
 	            if (agregar != 0) {
@@ -108,7 +108,7 @@ public class Administrador {
 	                System.out.println("¡Hechizo añadido!");
 	            }
 	            break;
-	        case 3:
+	        case 3: //muestra hechizos luego se selecciona cual borrar
 	            m.mostrarHechizos();
 	            int quitar = seleccionar(0, m.getHechizos().size());
 	            if (quitar != 0) {
@@ -118,7 +118,7 @@ public class Administrador {
 	            break;
 	    }
 	    System.out.println("Cambio exitoso!");
-	    escritor.escribirMago(magos);
+	    escritor.escribirMago(magos); //se escribe el archivo
 	}
 	
 	private void eliminarMago() throws IOException { //borra el mago con .remove de la lista, luego modifica el archivo
@@ -136,7 +136,7 @@ public class Administrador {
 		escritor.escribirMago(magos);
 	}
 	
-	private void agregarHechizo() throws IOException {
+	private void agregarHechizo() throws IOException { //se añade hechizos nuevo
 	    System.out.println("¿De que tipo sera el nuevo hechizo?");
 	    System.out.println("1) Fuego\n2) Agua\n3) Planta\n4) Tierra");
 	    int tipo = seleccionar(1,4);
@@ -144,10 +144,10 @@ public class Administrador {
 	    String nombre = sc.nextLine();
 	    System.out.println("Ingrese daño del hechizo: ");
 	    int daño = seleccionarSinMaximo();
-	    Hechizo h;
+	    Hechizo h; //se pide nombre daño y luego segun el tipo se añade diferente
 
-	    switch (tipo) {
-	        case 1:
+	    switch (tipo) { //aqui es xd, segun el tipo del hechizo se añade con sus propiedades
+	        case 1: 
 	            System.out.println("Ingrese duracion de quemadura: ");
 	            int quemadura = seleccionarSinMaximo();
 	            h = new Fuego(nombre, "Fuego", daño, quemadura);
@@ -177,7 +177,7 @@ public class Administrador {
 
 	    hechizos.add(h);
 	    escritor.escribirHechizo(hechizos);
-	    System.out.println("¡Hechizo añadido correctamente!");
+	    System.out.println("¡Hechizo añadido correctamente!"); //guardar 
 	}
 		
 	
@@ -245,15 +245,15 @@ public class Administrador {
 	
 	public int seleccionar(int min, int max) { //seleccionar, el metodo para que el usuario elija un numero entre un min y un maximo, osea para retornar un numero entre un rango
 	    int opcion = -1;
-	    while (opcion < min || opcion > max) {
+	    while (opcion < min || opcion > max) { // mientras este fuera de rango se reproduce
 	        if (sc.hasNextInt()) {
 	            opcion = sc.nextInt();
 	            sc.nextLine();
 	            if (opcion < min || opcion > max) {
-	                System.out.println("Número fuera de rango, intente nuevamente.");
+	                System.out.println("Número fuera de rango, intente nuevamente."); //se repite si esta fuera de rango
 	            }
 	        } else {
-	            System.out.println("Debe ingresar un número, intente nuevamente.");
+	            System.out.println("Debe ingresar un número, intente nuevamente."); // si no ingresas un numero se repite
 	            sc.nextLine();
 	        }
 	    }

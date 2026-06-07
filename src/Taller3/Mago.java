@@ -13,26 +13,30 @@ public class Mago {
 	}
 	
 	public void añadirHechizo(Hechizo h) {
-		hechizos.add(h);
+	    if (!hechizos.contains(h)) { //si la lista de hechizos no lo tiene lo agrega
+	        hechizos.add(h);
+	    } else {
+	        System.out.println("El mago ya tiene ese hechizo."); // si ya lo tiene no lo agrega
+	    }
 	}
 	
 	public String getNombre() {
-		return nombre;
+		return nombre; //get el nombre
 	}
 	
-	public List<Hechizo> getHechizos() {
+	public List<Hechizo> getHechizos() { //get de el hechizo
 		return hechizos;
 	}
 	
-	public void cambiarNombre(String nombre) {
+	public void cambiarNombre(String nombre) { //cambiar el nombre
 		this.nombre = nombre;
 	}
 	
-	public void eliminarHechizo(int opcion) {
+	public void eliminarHechizo(int opcion) { //borrar hechizo
 		hechizos.remove(opcion);
 	}
 	
-	public void mostrarHechizos() {
+	public void mostrarHechizos() { //mostrar hechizos del mago, prints
 		int i = 1;
 		for (Hechizo h : hechizos) {
 			System.out.println(i + ") " + h.getNombre());
@@ -41,7 +45,7 @@ public class Mago {
 	}
 	
 	public String hechizoAñadido(String añadido) {
-		return añadido;
+		return añadido; //añadir hechizo
 	}
 	
 }
