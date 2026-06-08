@@ -1,3 +1,8 @@
+/*Integrante 1: Andrés Rojas 22.065.446-k ICCI
+ *Integrante 2: Jorge Callejas 21.926.182-9 ICI 
+ * 
+ * 
+ */
 package Taller3;
 
 import java.io.IOException;
